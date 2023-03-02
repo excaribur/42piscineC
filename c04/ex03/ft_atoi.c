@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jphonyia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/12 15:05:19 by jphonyia          #+#    #+#             */
+/*   Updated: 2022/10/13 12:45:17 by jphonyia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*	check FT can start isspace() if found alpha return NULL
+	and return pointer start wiht  + or -;
+	check sign of number
+	check only digit
+	if found Non-number after,then return a result
+*/
+
+char	*ignore_space(char *str)
+{
+	while (*str != '-' && *str != '+')
+	{
+		if (*str >= '0' && *str <= '9')
+			return (str);
+		if (*str != ' ' && !(*str >= 9 && *str <= 13))
+			return ("\0");
+		str++;
+	}
+	return (str);
+}
+
+int	ft_atoi(char *str)
+{
+	int		run;
+	int		sign;
+	char	*s1;
+
+	run = 0;
+	sign = 1;
+	s1 = ignore_space(str);
+	while (*s1)
+	{
+		if ((*s1 < '0' || *s1 > '9') && run != 0)
+			return (sign * run);
+		if (*s1 == '-')
+			sign *= -1;
+		if (*s1 >= '0' && *s1 <= '9')
+			run = run * 10 + *s1 - '0';
+		if (*s1 != '-' && *s1 != '+' && !(*s1 >= '0' && *s1 <= '9'))
+			return (0);
+		s1++;
+	}
+	return (sign * run);
+}
